@@ -28,12 +28,22 @@ export interface ContactFormSetting {
   submitButtonLabel?: string
 }
 
+export interface FireFormSuccessCallback { (): void }
+export interface FireFormErrorCallback { (error: Error): void }
+
 export interface Props {
   config: FirebaseConfig,
-  setting?: ContactFormSetting
+  setting?: ContactFormSetting,
+  successCallback: FireFormSuccessCallback,
+  errorCallback: FireFormErrorCallback
 }
 
-const ContactForm = ({ config, setting }: Props) => {
+const ContactForm = ({
+  config,
+  setting,
+  successCallback,
+  errorCallback
+}: Props) => {
   const [name, setName] = useState('');
   const [companyName, setCompanyName] = useState('');
   const [email, setEmail] = useState('');
@@ -55,9 +65,9 @@ const ContactForm = ({ config, setting }: Props) => {
     },
       (error: Error | null) => {
         if (error) {
-          console.log(error)
+          errorCallback(error)
         } else {
-          console.log("success")
+          successCallback()
         }
       }
     );
