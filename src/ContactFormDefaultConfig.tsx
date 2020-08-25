@@ -35,9 +35,18 @@ const defaultConfig: ContactFormSetting = {
     height: "40px",
     border: "none",
     color: "white",
-    marginTop: "30px",
     fontWeight: "bold",
     cursor: "pointer"
+  },
+  indicatorStyle: {
+    position: "absolute",
+    left: "0",
+    right: "0",
+    marginLeft: "auto",
+    marginRight: "auto",
+    top: "15%",
+    height: "40px",
+    width: "30px"
   },
   namePlaceHolder: "Name",
   companyNamePlaceHolder: "Company Name",

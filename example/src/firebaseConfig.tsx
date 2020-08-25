@@ -1,3 +1,5 @@
+// This is sample and deprecated.
+// Please replace with your Firebase Config
 export default {
   apiKey: "AIzaSyD1DBLBhoaBUntOdlZenhc01_9dnDkAlgY",
   authDomain: "database-test-e19c7.firebaseapp.com",

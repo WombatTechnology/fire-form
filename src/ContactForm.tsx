@@ -4,6 +4,8 @@ import 'firebase/database'
 import './reset.css'
 import defaultConfig from './ContactFormDefaultConfig'
 import CSS from 'csstype'
+import ClipLoader from "react-spinners/ClipLoader";
+
 export interface FirebaseConfig {
   apiKey: string,
   authDomain: string,
@@ -21,6 +23,7 @@ export interface ContactFormSetting {
   textStyle?: CSS.Properties,
   textAreaStyle?: CSS.Properties,
   buttonStyle?: CSS.Properties,
+  indicatorStyle?: CSS.Properties,
   namePlaceHolder?: string,
   companyNamePlaceHolder?: string,
   emailPlaceHolder?: string,
@@ -48,9 +51,11 @@ const ContactForm = ({
   const [companyName, setCompanyName] = useState('');
   const [email, setEmail] = useState('');
   const [content, setContent] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()
+    setLoading(true)
     // Init firebase
     if (!firebase.apps.length) {
       firebase.initializeApp(config)
@@ -64,6 +69,7 @@ const ContactForm = ({
       content: content
     },
       (error: Error | null) => {
+        setLoading(false)
         if (error) {
           errorCallback(error)
         } else {
@@ -106,12 +112,24 @@ const ContactForm = ({
           value={content}
           onChange={(event) => setContent(event.target.value)}
         />
-        <input
-          style={setting?.buttonStyle || defaultConfig.buttonStyle}
-          type="submit"
-          value={setting?.submitButtonLabel || defaultConfig.submitButtonLabel}
-        />
-        <div className="Button" />
+        <div style={{ position: "relative", height: "40px", marginTop: "30px" }}>
+          <input
+            style={setting?.buttonStyle || defaultConfig.buttonStyle}
+            type="submit"
+            disabled={loading}
+            value={loading ? "" : (setting?.submitButtonLabel || defaultConfig.submitButtonLabel)}
+          />
+          {
+            loading &&
+            <div style={setting?.indicatorStyle || defaultConfig.indicatorStyle}>
+              <ClipLoader
+                size={30}
+                color={"white"}
+                loading={true}
+              />
+            </div>
+          }
+        </div>
       </form>
     </div>
   )
