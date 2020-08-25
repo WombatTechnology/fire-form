@@ -1,10 +1,12 @@
 import React from 'react'
-
-import { ExampleComponent } from 'fire-form'
+import 'fire-form'
+import { ContactForm } from 'fire-form'
 import 'fire-form/dist/index.css'
+import config from './firebaseConfig'
+import { FirebaseConfig } from '../../dist/ContactForm'
 
 const App = () => {
-  return <ExampleComponent text="Create React Library Example 😄" />
+  const hoge: FirebaseConfig = config
+  return <ContactForm config={hoge} />
 }
-
 export default App
